@@ -14,13 +14,20 @@ def evaluate(rows, stage):
         "status": "READY",
     }
     try:
-        case["prep"], payload = prepare(rows)
+        prep, payload = prepare(rows)
+        case["prep"] = prep
         if stage >= 3:
             case["measure"] = compute(payload)
         if stage >= 4:
             case.update(policy(case["measure"]))
     except DomainIssue as error:
         case["status"] = error.code
+        details = {k: v for k, v in error.details.items() if k != "ledger"}
+        case["blocker"] = {"code": error.code, "records": error.records}
+        if details:
+            case["blocker"]["details"] = details
+        if error.details.get("ledger"):
+            case["ledger"] = error.details["ledger"]
     return case
 
 

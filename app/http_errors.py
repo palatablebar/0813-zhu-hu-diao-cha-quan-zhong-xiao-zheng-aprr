@@ -15,6 +15,10 @@ LABELS = {
     "STALE_REVIEW": "批次已更新，请刷新",
     "RUN_FINALIZED": "批次已签发",
     "UNRESOLVED_ISSUES": "存在待处理差异",
+    "MOVE_TARGET_MISSING": "迁户目标层缺少最新普查目标",
+    "MOVE_CONFLICT": "迁户更正互相冲突",
+    "MOVE_OVERDRAW": "迁出户数超过原层在册样本",
+    "MOVE_REPLAY": "重跑后重复挪户",
     "SAMPLE_UNKNOWN": "样例不存在",
     "STAGE_UNKNOWN": "处理阶段不存在",
 }
@@ -31,4 +35,9 @@ def response(error):
             else 413 if code == "FILE_TOO_LARGE" else 422
         )
     )
-    return jsonify(code=code, message=LABELS.get(code, code)), status
+    body = {"code": code, "message": LABELS.get(code, code)}
+    if error.records:
+        body["records"] = list(error.records)
+    if error.details:
+        body["details"] = error.details
+    return jsonify(**body), status

@@ -52,3 +52,5 @@ body.notebook {margin:0;background:var(--bg);color:var(--ink);font:var(--size)/1
 .weight-slip {border:1px solid var(--line);background:var(--bg);padding:10px;display:grid;gap:5px;text-align:center}
 .weight-slip strong {font:700 1.5rem var(--font-num)}
 .weight-sum {border-bottom:2px dotted var(--accent);padding:8px 0;margin-top:8px}
+.weight-slip[data-result="READY"] {border-color:var(--accent)}
+.weight-slip small {color:var(--sub);font-size:.78em;font-variant-numeric:tabular-nums}

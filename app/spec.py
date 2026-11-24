@@ -1,5 +1,5 @@
 COLUMNS = ("stratum", "households", "responded", "target")
-KINDS = ("wave", "census")
+KINDS = ("wave", "census", "move")
 PROJECT = {
     "name": "住户调查权重校正",
     "actor": "抽样调查数据员",
